@@ -15,7 +15,7 @@ import pickle
 SCOPES = ['https://www.googleapis.com/auth/gmail.send']
 
 # Load the Excel file
-df = pd.read_excel('/Users/jeremyhsiao/Desktop/Brinno/all_emails.xlsx')
+df = pd.read_excel('path to excel/all_emails.xlsx')
 
 # Authenticate and initialize the Gmail API client
 creds = None
@@ -28,7 +28,7 @@ if not creds or not creds.valid:
     if creds and creds.expired and creds.refresh_token:
         creds.refresh(Request())
     else:
-        flow = InstalledAppFlow.from_client_secrets_file('/Users/jeremyhsiao/Desktop/Brinno/credentials.json', SCOPES)
+        flow = InstalledAppFlow.from_client_secrets_file('path to credentials/credentials.json', SCOPES)
         creds = flow.run_local_server(port=0)
     # Save the credentials for the next run
     with open('token.pickle', 'wb') as token:
@@ -37,130 +37,22 @@ if not creds or not creds.valid:
 service = build('gmail', 'v1', credentials=creds)
 
 # Email content with CSS styling
-subject = 'Brinno Time Lapse Camera'
+subject = 'Subject Line'
 html_content = """
 <html>
-  <head>
-    <style>
-      .montserrat-bold-blue {{
-        font-family: 'Montserrat', sans-serif;
-        font-size: 24px;
-        color: rgba(0, 0, 255, 0.5);
-        font-weight: bold;
-        text-align: center;
-      }}
-      .montserrat-24 {{
-        font-weight: bold;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 24px;
-      }}
-      .montserrat-14 {{
-        font-weight: bold;
-        font-family: 'Montserrat', sans-serif;
-        font-size: 16px;
-      }}
-      .georgia-14 {{
-        font-weight: bold;
-        font-family: 'Montserrat', serif;
-        font-size: 20px;
-        text-align: center;
-      }}
-      .aptos-24 {{
-        font-weight: bold;
-        font-family: 'Aptos', sans-serif;
-        font-size: 24px;
-        text-align: center;
-      }}
-      .aptos-14 {{
-        font-family: 'Aptos', sans-serif;
-        font-size: 16px;
-
-      }}
-      .aptos-14-bold {{
-        font-family: 'Aptos', sans-serif;
-        font-size: 16px;
-        font-weight: bold;
-
-      }}
-      .red {{
-        color: red;
-      }}
-      .bold-italic {{
-        font-weight: bold;
-        font-style: italic;
-      }}
-      .center {{
-        text-align: center;
-      }}
-      .names {{
-        font-size: 14px;
-        font-family: 'Aptos', sans-serif;
-      }}
-      .smaller-img {{
-        width: 70%;
-      }}
-      .even-smaller {{
-        width: 40%;
-        height: 40%;
-      }}
-    </style>
-  </head>
-  <body>
-    <p class="names">
-        To {FirstName} {MiddleName} {LastName},
-    </p>
-    <p class="montserrat-bold-blue">
-      Smartec, Inc. is the reliable authorized distributor for Brinno Time Lapse products for more than 15 years in USA. Feel free to contact us if you have any questions about Brinno Time Lapse cameras.<br>
-      Special <span class="red">15%</span> off for all the Brinno products<br>
-      Limited time only!!!
-    </p>
-    <p class="georgia-14"><u>What is BRINNO Time Lapse?</u></p>
-    <p class="montserrat-14">
-
-      Brinno provides you with a truly worry-free time lapse solution. Time lapse allows you to watch months of construction progress in a matter of minutes. Take a sequence of photos at intervals and schedule of your choice. Your camera will automatically stitch together your images and create a ready-to-view time lapse video.
-
-    </p>
-    <p class="center"><img src="cid:image1"></p>
-    <p class="center"><img src="cid:image2" class="smaller-img"></p>
-    <p class="center"><a href="https://www.youtube.com/watch?v=mjqamy_I6Fg"><img src="cid:image3"></a></p>
-    <p class="aptos-24">Why Brinno?</p>
-    <p class="center"><img src="cid:image4" class="even-smaller"></p>
-    <p class="montserrat-24 center">Visit Brinno at <a href="http://www.brinno.com">www.brinno.com</a> for all the time lapse camera information.</p>
-    <p class="montserrat-24">Featured Product:<br></p>
-    <p class="aptos-14-bold">BCC200 BLE Time Lapse Camera Controller Bundle</p>
-    <p class="aptos-14">
-      1. Wire-Free Camera Control - Connect up to 20 time lapse cameras using ARC1000 Bluetooth remote controller<br>
-      2. Shine Everywhere Anywhere - High quality HDR & Low light performance<br>
-      3. Solar Charged Till Forever – Utilization of Solar energy with ASP<br>
-      4. No More Waste of Batteries – Rechargeable batteries keep time lapse running
-    </p>
-    <p class="center"><img src="cid:image5" class="smaller-img"></p>
-    <p class="center"><img src="cid:image6" class="smaller-img"></p>
-    <p class="aptos-14">
-      If you need any professional help on selecting cameras, setting up the cameras and monitoring the cameras for your project, please feel free to contact us. We can connect you with our Authorized Service Partner.<br><br>
-      Thank you for your time and we hope to hear from you soon!
-    </p>
-    <p class="bold-italic">
-      Best regards,<br>
-      C W Hsiao<br>
-      Smartec Store<br>
-      Tel / Fax : 1-888-552-6650<br>
-      Email : <a href="mailto:cwhsiao@smartecstore.com">cwhsiao@smartecstore.com</a><br>
-      <a href="http://www.smartecstore.com">www.smartecstore.com</a>
-    </p>
-  </body>
+Insert Content for Email
 </html>
 """
 
 
 # Paths to the images
 image_paths = {
-    "image1": "/Users/jeremyhsiao/Desktop/Brinno/camera_pictures.jpeg",
-    "image2": "/Users/jeremyhsiao/Desktop/Brinno/header.jpeg",
-    "image3": "/Users/jeremyhsiao/Desktop/Brinno/thumbnail.jpeg",
-    "image4": "/Users/jeremyhsiao/Desktop/Brinno/whyBrinno.jpeg",
-    "image5": "/Users/jeremyhsiao/Desktop/Brinno/big.jpeg",
-    "image6": "/Users/jeremyhsiao/Desktop/Brinno/camera_features.jpeg"
+    "image1": "picture1.jpeg",
+    "image2": "picture2.jpeg",
+    "image3": "picture3.jpeg",
+    "image4": "picture4.jpeg",
+    "image5": "picture5.jpeg",
+    "image6": "picture6.jpeg"
 }
 
 # Function to attach an image to the email
@@ -177,7 +69,7 @@ def attach_image(msg, image_cid, image_path):
 
 # Iterate through the DataFrame rows
 batch_size = 100
-for start in range(868, len(df), batch_size): 
+for start in range(0, len(df), batch_size): 
     end = start + batch_size
     batch_df = df[start:end]
 
