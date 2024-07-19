@@ -69,7 +69,11 @@ def attach_image(msg, image_cid, image_path):
 
 # Iterate through the DataFrame rows
 batch_size = 100
-for start in range(0, len(df), batch_size): 
+email_count = 0
+max_emails = 1950 # to avoid typical max email limit of 2000
+email_start = ___ # set starting point
+
+for start in range(email_start, min(email_start + max_emails, len(df)), batch_size):
     end = start + batch_size
     batch_df = df[start:end]
 
@@ -107,7 +111,14 @@ for start in range(0, len(df), batch_size):
             print(f'Email sent to {email}')
         except Exception as e:
             print(f'An error occurred: {e}')
-
+        email_count += 1    
+        if email_count >= max_emails:
+          email_start += max_emails
+          break
+    
+    
+    print(email_count)
     # Wait to avoid hitting the sending limit
 
 print('Emails sent successfully!')
+
