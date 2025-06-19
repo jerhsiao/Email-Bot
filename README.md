@@ -1,4 +1,4 @@
-Project Title: Emai Bot
+Project Title: Email Bot
 
 Project Description: 
 Main.py: This project was built to help a company advertise their time lapse camera products by sending out mass, customized emails to 22,000 companies, 
